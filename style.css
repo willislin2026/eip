@@ -1,0 +1,670 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* 色彩系統 - 台大醫院藍色系升級版 */
+    --primary-color: #0b3c5d;      /* 經典深海藍 */
+    --primary-light: #328cc1;     /* 亮天藍 */
+    --primary-dark: #07253a;      /* 深藏青 */
+    --accent-color: #1d2731;      /* 炭灰 */
+    --bg-main: #f4f7f9;           /* 極淺霧藍灰 */
+    --bg-card: #ffffff;           /* 卡片白 */
+    --text-main: #2c3e50;         /* 主要文字深灰 */
+    --text-muted: #7f8c8d;        /* 次要文字灰 */
+    --border-color: #e2e8f0;      /* 邊框輕灰 */
+    
+    /* 輔助與狀態色 */
+    --success: #2ecc71;
+    --warning: #f1c40f;
+    --danger: #e74c3c;
+    --info: #3498db;
+    
+    /* 字型與間距 */
+    --font-sans: 'Outfit', 'Noto Sans TC', sans-serif;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(11, 60, 93, 0.08);
+    --shadow-lg: 0 12px 24px rgba(11, 60, 93, 0.12);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--primary-light);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+/* 布局與容器 */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    padding: 2rem 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* 頂部導覽列 Header */
+.navbar {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 0.8rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.navbar-brand span {
+    background: linear-gradient(45deg, #00d2ff, #00d2ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 0.8rem;
+    border: 1px solid #00d2ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 5px;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-link:hover, .nav-item.active .nav-link {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 使用者資訊與登出 */
+.user-panel {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-info {
+    font-size: 0.9rem;
+    text-align: right;
+}
+
+.user-name {
+    font-weight: 600;
+    color: white;
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: #a5b1c2;
+    background-color: rgba(255,255,255,0.15);
+    padding: 1px 6px;
+    border-radius: 10px;
+}
+
+.btn-logout {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #ff7675;
+    border: 1px solid rgba(231, 76, 60, 0.4);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-logout:hover {
+    background-color: var(--danger);
+    color: white;
+}
+
+/* EIP 儀表板與卡片樣式 */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(50, 140, 193, 0.3);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 模組尺寸 */
+.col-12 { grid-column: span 12; }
+.col-8 { grid-column: span 8; }
+.col-6 { grid-column: span 6; }
+.col-4 { grid-column: span 4; }
+.col-3 { grid-column: span 3; }
+
+@media (max-width: 992px) {
+    .col-8, .col-6, .col-4, .col-3 { grid-column: span 12; }
+}
+
+/* 二/三欄式佈局工具類別 */
+.layout-left, .sidebar-column {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.layout-center, .main-column {
+    grid-column: span 6;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.layout-right {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.layout-sidebar-wide {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.layout-main-wide {
+    grid-column: span 8;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.layout-left .card,
+.layout-center .card,
+.layout-right .card,
+.layout-sidebar-wide .card,
+.layout-main-wide .card,
+.sidebar-column .card,
+.main-column .card {
+    margin-bottom: 0;
+}
+
+@media (max-width: 992px) {
+    .layout-left, .layout-center, .layout-right, .layout-sidebar-wide, .layout-main-wide, .sidebar-column, .main-column {
+        grid-column: span 12 !important;
+    }
+}
+
+/* 左側導覽卡片樣式 */
+.sidebar-nav-card {
+    background: linear-gradient(160deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    color: white;
+}
+
+.sidebar-nav-card .sidebar-nav-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 0.8rem;
+}
+
+.sidebar-nav-card a.sidebar-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.85);
+    padding: 0.55rem 0.8rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+    text-decoration: none;
+    margin-bottom: 4px;
+}
+
+.sidebar-nav-card a.sidebar-nav-item:hover {
+    background-color: rgba(255,255,255,0.15);
+    color: white;
+    padding-left: 1.1rem;
+}
+
+/* 萬年曆樣式 */
+.calendar-widget {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.calendar-day-head {
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 0.85rem;
+    padding: 5px 0;
+}
+
+.calendar-day {
+    padding: 8px 0;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.calendar-day:hover {
+    background-color: var(--primary-light);
+    color: white;
+}
+
+.calendar-day.today {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+}
+
+/* 天氣元件 */
+.weather-widget {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+    border: none;
+}
+
+.weather-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.weather-temp {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.weather-desc {
+    font-weight: 500;
+    color: #0369a1;
+}
+
+.weather-icon {
+    font-size: 3rem;
+}
+
+/* 最新消息清單 */
+.news-list {
+    list-style: none;
+}
+
+.news-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.news-item:last-child {
+    border-bottom: none;
+}
+
+.news-badge {
+    background-color: var(--primary-light);
+    color: white;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 8px;
+}
+
+.news-badge.monthly {
+    background-color: #8e44ad;
+}
+
+.news-title-link {
+    color: var(--text-main);
+    font-weight: 500;
+    flex: 1;
+}
+
+.news-title-link:hover {
+    color: var(--primary-light);
+}
+
+.news-date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-left: 15px;
+}
+
+/* 常用表單元件 */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(50, 140, 193, 0.15);
+}
+
+.btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: var(--primary-light);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--border-color);
+    color: var(--text-main);
+}
+
+.btn-secondary:hover {
+    background-color: #cbd5e1;
+    color: var(--text-main);
+}
+
+/* 頁面說明區區塊 */
+.page-header {
+    margin-bottom: 2rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border-left: 5px solid var(--primary-color);
+}
+
+.page-title {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.3rem;
+}
+
+.page-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* 頁尾 Footer */
+.footer {
+    background-color: var(--accent-color);
+    color: #a5b1c2;
+    text-align: center;
+    padding: 1.5rem 0;
+    font-size: 0.85rem;
+    margin-top: 3rem;
+    border-top: 3px solid var(--primary-light);
+}
+
+/* 分機搜尋樣式 */
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.2rem;
+}
+
+.search-results {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.search-results th, .search-results td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.search-results th {
+    background-color: #f8fafc;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.search-results tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* 登入頁樣式 */
+.login-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: radial-gradient(circle at top left, #1e3d59 0%, #17b978 100%);
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    max-width: 420px;
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-logo h1 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.login-logo p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.alert {
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.alert-danger {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: var(--danger);
+    border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+.alert-success {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: var(--success);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+/* 預約會議室表格 */
+.reservation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.room-card {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.2rem;
+    background: white;
+    transition: var(--transition);
+}
+
+.room-card:hover {
+    border-color: var(--primary-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.room-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+}
+
+.room-booking-list {
+    list-style: none;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.room-booking-item {
+    padding: 5px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.room-status-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.room-status-badge.available {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: var(--success);
+}
+
+.room-status-badge.booked {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: var(--danger);
+}
+
+
+
