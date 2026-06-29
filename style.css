@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-    /* 色彩系統 - 台大醫院藍色系升級版 */
-    --primary-color: #0b3c5d;      /* 經典深海藍 */
-    --primary-light: #328cc1;     /* 亮天藍 */
-    --primary-dark: #07253a;      /* 深藏青 */
-    --accent-color: #1d2731;      /* 炭灰 */
+    /* 色彩系統 - 圖片藍色漸層系 (亮藍至紫藍) */
+    --primary-color: #1d6cb5;      /* 經典亮藍 (漸層起點) */
+    --primary-light: #4c96dd;     /* 亮天藍 */
+    --primary-dark: #124c82;      /* 深藍 */
+    --accent-color: #3e68b3;      /* 紫藍 (漸層終點) */
     --bg-main: #f4f7f9;           /* 極淺霧藍灰 */
     --bg-card: #ffffff;           /* 卡片白 */
     --text-main: #2c3e50;         /* 主要文字深灰 */
@@ -21,8 +21,8 @@
     /* 字型與間距 */
     --font-sans: 'Outfit', 'Noto Sans TC', sans-serif;
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 12px rgba(11, 60, 93, 0.08);
-    --shadow-lg: 0 12px 24px rgba(11, 60, 93, 0.12);
+    --shadow-md: 0 4px 12px rgba(29, 108, 181, 0.08);
+    --shadow-lg: 0 12px 24px rgba(29, 108, 181, 0.12);
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     --radius-sm: 6px;
     --radius-md: 12px;
@@ -70,7 +70,7 @@ a:hover {
 
 /* 頂部導覽列 Header */
 .navbar {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    background: linear-gradient(45deg, var(--primary-color) 0%, var(--accent-color) 100%);
     color: white;
     padding: 0.8rem 5%;
     display: flex;
@@ -93,11 +93,11 @@ a:hover {
 }
 
 .navbar-brand span {
-    background: linear-gradient(45deg, #00d2ff, #00d2ff);
+    background: linear-gradient(45deg, #a5d8ff, #ffffff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 0.8rem;
-    border: 1px solid #00d2ff;
+    border: 1px solid rgba(255, 255, 255, 0.6);
     padding: 2px 6px;
     border-radius: 4px;
     margin-left: 5px;
@@ -277,7 +277,7 @@ a:hover {
 
 /* 左側導覽卡片樣式 */
 .sidebar-nav-card {
-    background: linear-gradient(160deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    background: linear-gradient(45deg, var(--primary-color) 0%, var(--accent-color) 100%);
     border-radius: var(--radius-md);
     padding: 1.5rem;
     color: white;
@@ -514,7 +514,7 @@ a:hover {
 
 /* 頁尾 Footer */
 .footer {
-    background-color: var(--accent-color);
+    background-color: #112942;
     color: #a5b1c2;
     text-align: center;
     padding: 1.5rem 0;
@@ -558,7 +558,7 @@ a:hover {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: radial-gradient(circle at top left, #1e3d59 0%, #17b978 100%);
+    background: linear-gradient(45deg, var(--primary-color) 0%, var(--accent-color) 100%);
 }
 
 .login-card {
