@@ -170,6 +170,24 @@ function init_mysql_tables($pdo) {
             $insert_stmt->execute($o);
         }
     }
+
+    // 檢查並寫入預設會議室預約紀錄
+    $stmt = $pdo->query("SELECT COUNT(*) FROM `room_reservations`");
+    if ($stmt->fetchColumn() == 0) {
+        $reservations_mock = [
+            ['A1 視訊會議室', 'user2', date('Y-m-d'), '14:00:00', '16:00:00', '人資季度考核會議'],
+            ['A2 視訊會議室', 'admin', date('Y-m-d'), '10:00:00', '12:00:00', 'EIP系統上線進度檢討']
+        ];
+        $insert_stmt = $pdo->prepare("INSERT INTO `room_reservations` (room_name, username, reserve_date, start_time, end_time, purpose) VALUES (?, ?, ?, ?, ?, ?)");
+        foreach ($reservations_mock as $r) {
+            $insert_stmt->execute($r);
+        }
+    } else {
+        // 舊會議室名稱自動移轉升級
+        $pdo->exec("UPDATE `room_reservations` SET `room_name` = 'A1 視訊會議室' WHERE `room_name` = 'A會議室(大)'");
+        $pdo->exec("UPDATE `room_reservations` SET `room_name` = 'A2 視訊會議室' WHERE `room_name` = 'B會議室(中)'");
+        $pdo->exec("UPDATE `room_reservations` SET `room_name` = 'A3 會議室' WHERE `room_name` = 'C會議室(小)'");
+    }
 }
 
 /**
@@ -219,9 +237,28 @@ function init_session_mock_data() {
     // 預設預約會議室紀錄
     if (!isset($_SESSION['mock_reservations'])) {
         $_SESSION['mock_reservations'] = [
-            ['id' => 1, 'room_name' => 'A會議室(大)', 'username' => 'user2', 'reserve_date' => date('Y-m-d'), 'start_time' => '14:00', 'end_time' => '16:00', 'purpose' => '人資季度考核會議'],
-            ['id' => 2, 'room_name' => 'B會議室(中)', 'username' => 'admin', 'reserve_date' => date('Y-m-d'), 'start_time' => '10:00', 'end_time' => '12:00', 'purpose' => 'EIP系統上線進度檢討']
+            ['id' => 1, 'room_name' => 'A1 視訊會議室', 'username' => 'user2', 'reserve_date' => date('Y-m-d'), 'start_time' => '14:00:00', 'end_time' => '16:00:00', 'purpose' => '人資季度考核會議'],
+            ['id' => 2, 'room_name' => 'A2 視訊會議室', 'username' => 'admin', 'reserve_date' => date('Y-m-d'), 'start_time' => '10:00:00', 'end_time' => '12:00:00', 'purpose' => 'EIP系統上線進度檢討']
         ];
+    } else {
+        // 如果已經有 Session 預約紀錄，也順便移轉更新
+        foreach ($_SESSION['mock_reservations'] as &$res) {
+            if ($res['room_name'] === 'A會議室(大)') {
+                $res['room_name'] = 'A1 視訊會議室';
+            } elseif ($res['room_name'] === 'B會議室(中)') {
+                $res['room_name'] = 'A2 視訊會議室';
+            } elseif ($res['room_name'] === 'C會議室(小)') {
+                $res['room_name'] = 'A3 會議室';
+            }
+            // 同步將 Session 內時間格式補齊秒數
+            if (strlen($res['start_time']) === 5) {
+                $res['start_time'] .= ':00';
+            }
+            if (strlen($res['end_time']) === 5) {
+                $res['end_time'] .= ':00';
+            }
+        }
+        unset($res);
     }
     
     // 預設員工意見箱

@@ -20,8 +20,8 @@ $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome 圖標 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- 全域樣式 -->
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>style.css">
+    <!-- 全域樣式 (加上版本號以強制清除瀏覽器快取) -->
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>style.css?v=<?php echo filemtime(__DIR__ . '/../style.css'); ?>">
 </head>
 <body>
 <div class="app-container">

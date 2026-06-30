@@ -5,7 +5,7 @@ $res_status = '';
 $res_error = '';
 
 // 會議室清單
-$rooms = ['A會議室(大)', 'B會議室(中)', 'C會議室(小)'];
+$rooms = ['A1 視訊會議室', 'A2 視訊會議室', 'A3 會議室'];
 
 // 處理預約送出
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'reserve_room') {
@@ -15,8 +15,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $end_time = trim($_POST['end_time']);
     $purpose = trim($_POST['purpose']);
     
+    // 將時間格式補齊為 HH:MM:SS，以便與資料庫/Session 的標準格式精準比對
+    if (strlen($start_time) === 5) {
+        $start_time .= ':00';
+    }
+    if (strlen($end_time) === 5) {
+        $end_time .= ':00';
+    }
+    
+    $today = date('Y-m-d');
+    
     if (empty($selected_room) || empty($reserve_date) || empty($start_time) || empty($end_time) || empty($purpose)) {
         $res_error = '所有欄位皆為必填';
+    } elseif ($reserve_date < $today) {
+        $res_error = '預約日期不得為過去的日期';
     } elseif ($start_time >= $end_time) {
         $res_error = '開始時間必須早於結束時間';
     } else {
